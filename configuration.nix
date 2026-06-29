@@ -52,10 +52,6 @@
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Auto updates
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.dates = "weekly";
-
   # Auto garbage collection
   nix.gc.automatic = true;
   nix.gc.dates = "weekly";
@@ -139,6 +135,7 @@
     hyprpolkitagent
     inputs.naviterm.packages.${pkgs.system}.default
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    just
     kitty
     lazygit
     libnotify
