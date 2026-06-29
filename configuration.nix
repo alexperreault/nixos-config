@@ -100,7 +100,7 @@
 
   # Setup fido2 (manual steps required to register the key)
   security.pam.services = {
-    login.u2fAuth = true;
+    login.u2fAuth = false;
     sudo.u2fAuth = true;
   };
 
