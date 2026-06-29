@@ -102,6 +102,12 @@
   security.pam.services.login.enableGnomeKeyring = true;
   services.gnome.gcr-ssh-agent.enable = true;
 
+  # Setup fido2 (manual steps required to register the key)
+  security.pam.services = {
+    login.u2fAuth = true;
+    sudo.u2fAuth = true;
+  };
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
