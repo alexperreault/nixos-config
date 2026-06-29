@@ -104,6 +104,8 @@
     sudo.u2fAuth = true;
   };
 
+  security.pam.u2f.settings.cue = true;
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
