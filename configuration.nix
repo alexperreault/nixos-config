@@ -151,7 +151,7 @@
     hyprlauncher
     hyprpaper
     hyprpolkitagent
-    inputs.naviterm.packages.${pkgs.system}.default
+    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     just
     kitty
