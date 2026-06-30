@@ -7,7 +7,10 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
@@ -45,9 +48,11 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Auto garbage collection
-  nix.gc.automatic = true;
-  nix.gc.dates = "weekly";
-  nix.gc.options = "--delete-older-than 14d";
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
   nix.settings.auto-optimise-store = true;
 
   # Enable CUPS to print documents.
@@ -95,6 +100,12 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+
+  programs.foot = {
+    enable = true;
+    enableBashIntegration = true;
   };
 
   programs.neovim = {
@@ -102,6 +113,15 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
   };
 
   # Allow unfree packages
@@ -114,9 +134,7 @@
     clang
     claude-code
     discord
-    foot
     fzf
-    git
     htop
     hyprlauncher
     hyprpaper
@@ -133,6 +151,9 @@
     wget
   ];
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
 
   # ENV vars
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -142,6 +163,7 @@
     enable = true;
     openFirewall = true;
     settings = {
+      X11Forwarding = false;
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";
