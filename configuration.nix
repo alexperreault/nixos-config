@@ -16,8 +16,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "north"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "north";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -149,6 +148,7 @@
     seahorse
     swaynotificationcenter
     wget
+    wl-clipboard
   ];
 
   fonts.packages = with pkgs; [
