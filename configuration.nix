@@ -24,6 +24,19 @@
   # Set your time zone.
   time.timeZone = "America/Toronto";
 
+  # Add avahi discoverability
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    nssmdns6 = false;
+    openFirewall = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
+  };
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
 
