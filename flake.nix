@@ -20,9 +20,11 @@
     in {
     nixosConfigurations = {
       north = lib.nixosSystem {
-        system = "x86-64-linux";
 	specialArgs = { inherit inputs; };
-        modules = [ ./configuration.nix ];
+        modules = [ 
+	  ./configuration.nix 
+          { nixpkgs.hostPlatform = "x86_64-linux"; }
+	];
       };
     };
   };
