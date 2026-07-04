@@ -1,8 +1,12 @@
 {
-  description = "A very basic flake";
+  description = "NixOS flake";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    home-manager = {
+        url = "github:nix-community/home-manager/master";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
     naviterm = {
         url = "gitlab:detoxify92/naviterm";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -22,9 +26,10 @@
 
   };
 
-  outputs = { self, nixpkgs, ... }@inputs :
+  outputs = { self, nixpkgs, home-manager, ... }@inputs :
     let 
       lib = nixpkgs.lib;
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
     in {
     nixosConfigurations = {
       north = lib.nixosSystem {
@@ -34,6 +39,15 @@
           { nixpkgs.hostPlatform = "x86_64-linux"; }
 	];
       };
+      };
+    homeConfigurations = {
+      alexp = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ 
+	  ./home.nix 
+	];
+      };
+
     };
   };
 }
