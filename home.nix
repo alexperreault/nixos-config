@@ -78,6 +78,11 @@
       cd = "z";
       gg = "lazygit";
     };
+    profileExtra = ''
+if uwsm check may-start; then
+  exec uwsm start hyprland.desktop
+fi
+    '';
   };
 
   programs.fzf = {

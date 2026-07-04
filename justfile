@@ -12,9 +12,12 @@ rebuild-test:
 
 # Stage changes, grab the active generation number, commit, and push
 commit:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    GEN_NIXOS=$(nixos-rebuild list-generations | awk '/True/ {print $1}')
+    GEN_HOME=$(home-manager generations | awk '/current/ {print $5}')
     git add .
-    @GEN=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
-    git commit -m "${GEN}"
+    git commit -m "nixos ${GEN_NIXOS}: home ${GEN_HOME}"
     git push
 
 # Update flake, rebuild and switch, then commit the generation
