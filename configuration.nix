@@ -91,9 +91,7 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
+  # Hyprland :D
   programs.hyprland.enable = true;
 
   # Keyring setup
@@ -144,15 +142,15 @@
   environment.systemPackages = with pkgs; [
     bibata-cursors
     clang
-    claude-code
     discord
     fzf
     htop
     hyprlauncher
     hyprpaper
     hyprpolkitagent
-    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     just
     kitty
