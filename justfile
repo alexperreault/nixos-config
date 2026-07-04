@@ -13,6 +13,7 @@ nix-rebuild-test:
 # Rebuild Home manager and switch
 home-switch:
     home-manager switch --flake .
+    fsel --refresh-cache
 
 # Stage changes, grab the active generation number, commit, and push
 commit:
