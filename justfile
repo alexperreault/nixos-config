@@ -17,7 +17,7 @@ commit:
     GEN_NIXOS=$(nixos-rebuild list-generations | awk '/True/ {print $1}')
     GEN_HOME=$(home-manager generations | awk '/current/ {print $5}')
     git add .
-    git commit -m "nixos ${GEN_NIXOS}: home ${GEN_HOME}"
+    git commit -m "n${GEN_NIXOS} : h${GEN_HOME}"
     git push
 
 # Update flake, rebuild and switch, then commit the generation
