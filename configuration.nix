@@ -95,7 +95,10 @@
   };
 
   # Hyprland :D
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 
   # Keyring setup
   services.gnome.gnome-keyring.enable = true;
@@ -114,6 +117,9 @@
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
 
   programs.foot = {
