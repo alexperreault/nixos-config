@@ -143,7 +143,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    alsa-utils
     bibata-cursors
     clang
     discord
@@ -164,6 +163,7 @@
     seahorse
     swaynotificationcenter
     wget
+    wiremix
     wl-clipboard
   ];
 
