@@ -16,6 +16,9 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Blank the console (TTY) after 60s idle, like `setterm --blank` + consoleblank=60
+  boot.kernelParams = [ "consoleblank=60" ];
+
   networking.hostName = "north";
 
   # Enable networking
