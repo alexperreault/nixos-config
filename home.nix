@@ -51,6 +51,9 @@
     # '';
   };
 
+  # Hyprland dotfiles symlink
+  xdg.configFile."hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
@@ -88,6 +91,20 @@ fi
   programs.fzf = {
     enable = true;
     enableBashIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "Alexandre Perreault";
+      email = "alexpqc@proton.me";
+    };
+    settings.alias = {
+      st = "status -s";
+      ci = "commit";
+      sw = "switch";
+      co = "checkout";
+    };
   };
 
   # Let Home Manager install and manage itself.
