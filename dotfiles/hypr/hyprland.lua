@@ -36,7 +36,6 @@ local menu        = "foot --title=launcher fsel -d"
 --
 hl.on("hyprland.start", function ()
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
-  hl.exec_cmd("systemctl --user start hyprpaper")
   hl.exec_cmd(uwsm_start .. terminal)
   hl.exec_cmd(uwsm_start .. "discord")
 end)
@@ -256,11 +255,11 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(uwsm_start .. terminal))
+hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(uwsm_start .. "~/.config/hypr/scripts/foot-cwd.sh"))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd(uwsm_start .. "foot --title=powermenu ~/.config/hypr/powermenu.sh"))
+hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd(uwsm_start .. "foot --title=powermenu ~/.config/hypr/scripts/powermenu.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd([[notify-send "$(date '+%A, %B %d | %H:%M')"]]))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(uwsm_start .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))

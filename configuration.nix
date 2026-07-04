@@ -122,21 +122,11 @@
     ];
   };
 
-  programs.foot = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
   };
 
   programs.git = {
@@ -149,28 +139,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    bibata-cursors
     clang
-    discord
-    fzf
-    htop
-    hyprlauncher
-    hyprpaper
-    hyprpolkitagent
-    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    just
-    kitty
-    lazygit
-    libnotify
-    playerctl
-    seahorse
-    swaynotificationcenter
     wget
-    wiremix
-    wl-clipboard
   ];
 
   fonts.packages = with pkgs; [

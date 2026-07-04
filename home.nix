@@ -18,11 +18,15 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    bibata-cursors
     discord
+    htop
     inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    jq
+    just
     lazygit
     libnotify
     playerctl
@@ -56,7 +60,7 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-
+    
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
@@ -128,6 +132,9 @@ fi
     enable = true;
     enableBashIntegration = true;
   };
+
+  services.hyprpaper.enable = true;
+  services.hyprpolkitagent.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
