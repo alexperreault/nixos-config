@@ -29,7 +29,10 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs :
     let 
       lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
     in {
     nixosConfigurations = {
       north = lib.nixosSystem {
@@ -43,8 +46,9 @@
     homeConfigurations = {
       alexp = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
-	  ./home.nix 
+	extraSpecialArgs = { inherit inputs; };
+        modules = [
+	  ./home.nix
 	];
       };
 

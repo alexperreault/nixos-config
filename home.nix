@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -17,7 +17,20 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
+    discord
+    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    lazygit
+    libnotify
+    playerctl
+    seahorse
+    swaynotificationcenter
+    wiremix
+    wl-clipboard
+    
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -105,6 +118,15 @@ fi
       sw = "switch";
       co = "checkout";
     };
+  };
+
+  programs.foot = {
+    enable = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
   };
 
   # Let Home Manager install and manage itself.
