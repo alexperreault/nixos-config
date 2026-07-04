@@ -3,12 +3,20 @@ update-flake:
     nix flake update
 
 # Rebuild the NixOS system and switch
-rebuild:
+rebuild-nix:
     sudo nixos-rebuild switch --flake .
 
 # Rebuild the NixOS system and test
-rebuild-test:
+rebuild-nix-test:
     sudo nixos-rebuild test --flake .
+
+# Rebuild Home manager and switch
+rebuild-home:
+    home-manager switch --flake .
+
+# Rebuild Home manager and test
+rebuild-home-test:
+    home-manager test --flake .
 
 # Stage changes, grab the active generation number, commit, and push
 commit:
@@ -21,4 +29,4 @@ commit:
     git push
 
 # Update flake, rebuild and switch, then commit the generation
-update: update-flake rebuild commit
+update: update-flake rebuild-nix rebuild-home commit
