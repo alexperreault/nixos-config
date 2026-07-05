@@ -2,18 +2,16 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
   boot.loader.systemd-boot = {
     enable = true;
     configurationLimit = 10;
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Blank the console (TTY) after 60s idle, like `setterm --blank` + consoleblank=60
@@ -21,13 +19,10 @@
 
   networking.hostName = "north";
 
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/Toronto";
 
-  # Add avahi discoverability
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -40,29 +35,21 @@
     };
   };
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = false;
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "ca";
     variant = "multix";
   };
 
-  # Configure console keymap
   console.keyMap = "cf";
 
-  # Enable graphics accel
   hardware.graphics.enable = true;
 
-  # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Auto garbage collection
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -70,10 +57,8 @@
   };
   nix.settings.auto-optimise-store = true;
 
-  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -83,7 +68,6 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."alexp" = {
     isNormalUser = true;
     description = "Alex";
@@ -112,7 +96,6 @@
     login.u2fAuth = false;
     sudo.u2fAuth = true;
   };
-
   security.pam.u2f.settings.cue = true;
 
   programs.steam = {
@@ -137,11 +120,8 @@
 
   programs.fish.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     clang
     wget
@@ -151,10 +131,8 @@
     nerd-fonts.jetbrains-mono
   ];
 
-  # ENV vars
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
     openFirewall = true;
