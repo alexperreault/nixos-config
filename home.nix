@@ -26,6 +26,7 @@
   home.file = {
     ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
     ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
+    ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
   };
 
   # Hyprland dotfiles symlink
