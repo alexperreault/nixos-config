@@ -105,9 +105,24 @@ fi
     '';
   };
 
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      ll = "ls -al";
+      cd = "z";
+      gg = "lazygit";
+    };
+    loginShellInit = ''
+if uwsm check may-start
+  exec uwsm start hyprland.desktop
+end
+    '';
+  };
+
   programs.fzf = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
   };
 
   programs.git = {
@@ -131,6 +146,7 @@ fi
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
   };
 
   services.hyprpaper.enable = true;

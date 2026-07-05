@@ -89,10 +89,12 @@
     description = "Alex";
     extraGroups = [ "networkmanager" "wheel" ];
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqVzkvGdw1ihqyZuGX3Njrf4OW2lGtFAu0xdnKkYb2T alexpqc@proton.me" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
+    shell = pkgs.fish;
   };
+
+  services.udev.extraRules = ''
+    KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_VENDOR_ID}=="3434", ENV{ID_INPUT_JOYSTICK}=="*?", ENV{ID_INPUT_JOYSTICK}=""
+  '';
 
   # Hyprland :D
   programs.hyprland = {
@@ -132,6 +134,8 @@
   programs.git = {
     enable = true;
   };
+
+  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
