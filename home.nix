@@ -91,20 +91,6 @@
     # EDITOR = "emacs";
   };
 
-  programs.bash = {
-    enable = true;
-    shellAliases = {
-      ll = "ls -al";
-      cd = "z";
-      gg = "lazygit";
-    };
-    profileExtra = ''
-if uwsm check may-start; then
-  exec uwsm start hyprland.desktop
-fi
-    '';
-  };
-
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -124,7 +110,6 @@ end
 
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
     enableFishIntegration = true;
   };
 
@@ -148,7 +133,6 @@ end
 
   programs.zoxide = {
     enable = true;
-    enableBashIntegration = true;
     enableFishIntegration = true;
   };
 
