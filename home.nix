@@ -112,6 +112,9 @@ fi
       cd = "z";
       gg = "lazygit";
     };
+    interactiveShellInit = ''
+      set -g fish_greeting ""
+    '';
     loginShellInit = ''
 if uwsm check may-start
   exec uwsm start hyprland.desktop
