@@ -139,6 +139,8 @@ end
   services.hyprpaper.enable = true;
   services.hyprpolkitagent.enable = true;
 
+  services.hyprsunset.enable = true;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
