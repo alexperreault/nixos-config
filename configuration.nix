@@ -124,7 +124,7 @@
 
   environment.systemPackages = with pkgs; [
     clang
-    proton-vpn
+    wireguard-tools
     wget
   ];
 
