@@ -124,6 +124,7 @@
 
   environment.systemPackages = with pkgs; [
     clang
+    proton-vpn-cli
     wget
   ];
 
