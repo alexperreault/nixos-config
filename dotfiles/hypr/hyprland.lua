@@ -102,7 +102,7 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 0,
+        rounding       = 4,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
@@ -307,7 +307,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind(mainMod .. " + SHIFT + P", function()
                  hl.timer(function()
                    hl.dispatch(hl.dsp.dpms({ action = "disable" }))
-                 end, {timeout = 300, type = "oneshot"})
+                 end, {timeout = 500, type = "oneshot"})
                end)
 
 -- Laptop multimedia keys for volume and LCD brightness
@@ -389,6 +389,7 @@ hl.window_rule({
     border_size       = 0,
     opacity           = "1.0 override 1.0 override",
     move              = { "monitor_w-window_w-40", "monitor_h*0.04" },
+    rounding          = 0,
 })
 
 -- Discord shenanigans
