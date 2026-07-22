@@ -124,6 +124,7 @@
 
   environment.systemPackages = with pkgs; [
     clang
+    ghostty.terminfo
     wireguard-tools
     wget
   ];
