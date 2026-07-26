@@ -9,7 +9,6 @@
     };
     naviterm = {
         url = "gitlab:detoxify92/naviterm";
-        inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -17,7 +16,6 @@
     };
     fsel = {
       url = "github:Mjoyufull/fsel";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code = {
       url = "github:sadjow/claude-code-nix";

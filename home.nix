@@ -17,6 +17,7 @@
     lazygit
     libnotify
     playerctl
+    ripgrep
     seahorse
     swaynotificationcenter
     wiremix
