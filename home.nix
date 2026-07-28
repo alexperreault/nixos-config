@@ -100,6 +100,11 @@
       };
     };
 
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     fzf = {
       enable = true;
       enableFishIntegration = true;

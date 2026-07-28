@@ -41,6 +41,17 @@
     in
     {
       formatter.x86_64-linux = pkgs.nixfmt-tree;
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        packages = with pkgs; [
+          nixd
+          nixfmt
+          statix
+          just
+        ];
+        shellHook = ''
+          echo "nixos config — just fmt | just lint | just update"
+        '';
+      };
       nixosConfigurations = {
         north = lib.nixosSystem {
           specialArgs = { inherit inputs; };
