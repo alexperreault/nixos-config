@@ -39,3 +39,11 @@ commit:
 
 # Update flake, rebuild and switch, then commit the generation
 update: update-flake nix-rebuild wait-net home-switch commit
+
+# Format the flake with nixfmt
+fmt:
+    nix fmt
+
+# Lint with statix
+lint:
+    statix check .

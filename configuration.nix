@@ -3,7 +3,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -20,7 +21,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
 
     # Blank the console (TTY) after 60s idle, like `setterm --blank` + consoleblank=60
-    kernelParams = ["consoleblank=60"];
+    kernelParams = [ "consoleblank=60" ];
   };
 
   networking = {
@@ -79,7 +80,7 @@
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
         PermitRootLogin = "no";
-        AllowUsers = ["alexp"];
+        AllowUsers = [ "alexp" ];
         MaxAuthTries = 3;
         PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
       };
@@ -94,7 +95,10 @@
 
   nix = {
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
     };
     gc = {
@@ -121,8 +125,13 @@
   users.users."alexp" = {
     isNormalUser = true;
     description = "Alex";
-    extraGroups = ["networkmanager" "wheel"];
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqVzkvGdw1ihqyZuGX3Njrf4OW2lGtFAu0xdnKkYb2T alexpqc@proton.me"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqVzkvGdw1ihqyZuGX3Njrf4OW2lGtFAu0xdnKkYb2T alexpqc@proton.me"
+    ];
     shell = pkgs.fish;
   };
 
@@ -173,7 +182,11 @@
   fileSystems."/mnt/musique" = {
     device = "nas.alexpqc.com:/nas/media_nas/jellyfin/Musique";
     fsType = "nfs";
-    options = ["ro" "x-systemd.automount" "noauto"];
+    options = [
+      "ro"
+      "x-systemd.automount"
+      "noauto"
+    ];
   };
 
   # This value determines the NixOS release from which the default

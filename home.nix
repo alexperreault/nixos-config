@@ -3,8 +3,9 @@
   pkgs,
   inputs,
   ...
-}: {
-  imports = [inputs.lazyvim.homeManagerModules.default];
+}:
+{
+  imports = [ inputs.lazyvim.homeManagerModules.default ];
 
   home = {
     username = "alexp";
@@ -38,7 +39,8 @@
   };
 
   # Hyprland dotfiles symlink
-  xdg.configFile."hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
+  xdg.configFile."hypr".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
 
   programs = {
     lazyvim = {
@@ -53,7 +55,7 @@
 
       extraPackages = with pkgs; [
         nixd
-        alejandra
+        nixfmt
         statix
       ];
     };

@@ -24,36 +24,40 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    lazyvim,
-    ...
-  } @ inputs: let
-    lib = nixpkgs.lib;
-    pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config.allowUnfree = true;
-    };
-  in {
-    nixosConfigurations = {
-      north = lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./configuration.nix
-          {nixpkgs.hostPlatform = "x86_64-linux";}
-        ];
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      lazyvim,
+      ...
+    }@inputs:
+    let
+      lib = nixpkgs.lib;
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+    in
+    {
+      formatter.x86_64-linux = pkgs.nixfmt-tree;
+      nixosConfigurations = {
+        north = lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./configuration.nix
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+          ];
+        };
+      };
+      homeConfigurations = {
+        alexp = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            ./home.nix
+          ];
+        };
       };
     };
-    homeConfigurations = {
-      alexp = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {inherit inputs;};
-        modules = [
-          ./home.nix
-        ];
-      };
-    };
-  };
 }
