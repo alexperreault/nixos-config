@@ -4,11 +4,12 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
-        url = "github:nix-community/home-manager/master";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+    lazyvim.url = "github:pfassina/lazyvim-nix";
     naviterm = {
-        url = "gitlab:detoxify92/naviterm";
+      url = "gitlab:detoxify92/naviterm";
     };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -21,35 +22,38 @@
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs :
-    let 
-      lib = nixpkgs.lib;
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-    in {
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    lazyvim,
+    ...
+  } @ inputs: let
+    lib = nixpkgs.lib;
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    };
+  in {
     nixosConfigurations = {
       north = lib.nixosSystem {
-	specialArgs = { inherit inputs; };
-        modules = [ 
-	  ./configuration.nix 
-          { nixpkgs.hostPlatform = "x86_64-linux"; }
-	];
+        specialArgs = {inherit inputs;};
+        modules = [
+          ./configuration.nix
+          {nixpkgs.hostPlatform = "x86_64-linux";}
+        ];
       };
-      };
+    };
     homeConfigurations = {
       alexp = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-	extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = {inherit inputs;};
         modules = [
-	  ./home.nix
-	];
+          ./home.nix
+        ];
       };
-
     };
   };
 }

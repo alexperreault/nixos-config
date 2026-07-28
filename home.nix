@@ -1,112 +1,136 @@
-{ config, pkgs, inputs, ... }:
-
 {
-  home.username = "alexp";
-  home.homeDirectory = "/home/alexp";
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [inputs.lazyvim.homeManagerModules.default];
 
-  home.packages = with pkgs; [
-    bibata-cursors
-    discord
-    htop
-    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    jq
-    just
-    lazygit
-    libnotify
-    playerctl
-    ripgrep
-    seahorse
-    swaynotificationcenter
-    wiremix
-    wl-clipboard
-  ];
+  home = {
+    username = "alexp";
+    homeDirectory = "/home/alexp";
 
-  home.file = {
-    ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
-    ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
-    ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
+    packages = with pkgs; [
+      bibata-cursors
+      discord
+      htop
+      inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      jq
+      just
+      lazygit
+      libnotify
+      playerctl
+      ripgrep
+      seahorse
+      swaynotificationcenter
+      wiremix
+      wl-clipboard
+    ];
+
+    file = {
+      ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
+      ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
+      ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
+    };
   };
 
   # Hyprland dotfiles symlink
   xdg.configFile."hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
 
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
+  programs = {
+    lazyvim = {
+      enable = true;
 
-  programs.fish = {
-    enable = true;
-    shellAliases = {
-      ll = "ls -al";
-      cd = "z";
-      gg = "lazygit";
+      extras = {
+        lang.nix = {
+          enable = true;
+          installDependencies = true;
+        };
+      };
+
+      extraPackages = with pkgs; [
+        nixd
+        alejandra
+        statix
+      ];
     };
-    interactiveShellInit = ''
-      set -g fish_greeting ""
-    '';
-    loginShellInit = ''
-if uwsm check may-start
-  exec uwsm start hyprland.desktop
-end
-    '';
-  };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    settings = {
-      "prod" = {
-        HostName = "prod.alexpqc.com";
+    fish = {
+      enable = true;
+      shellAliases = {
+        ll = "ls -al";
+        cd = "z";
+        gg = "lazygit";
       };
-      "pass" = {
-        HostName = "192.168.9.3";
-      };
-      "media" = {
-        HostName = "media.alexpqc.com";
-      };
-      "nas" = {
-        HostName = "nas.alexpqc.com";
-      };
-      "pve" = {
-        HostName = "192.168.8.9";
-	User = "root";
+      interactiveShellInit = ''
+        set -g fish_greeting ""
+      '';
+      loginShellInit = ''
+        if uwsm check may-start
+          exec uwsm start hyprland.desktop
+        end
+      '';
+    };
+
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      settings = {
+        "prod" = {
+          HostName = "prod.alexpqc.com";
+        };
+        "pass" = {
+          HostName = "192.168.9.3";
+        };
+        "media" = {
+          HostName = "media.alexpqc.com";
+        };
+        "nas" = {
+          HostName = "nas.alexpqc.com";
+        };
+        "pve" = {
+          HostName = "192.168.8.9";
+          User = "root";
+        };
       };
     };
-  };
 
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "Alexandre Perreault";
-      email = "alexpqc@proton.me";
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
     };
-    settings.alias = {
-      st = "status -s";
-      ci = "commit";
-      sw = "switch";
-      co = "checkout";
+
+    zoxide = {
+      enable = true;
+      enableFishIntegration = true;
     };
+
+    git = {
+      enable = true;
+      settings.user = {
+        name = "Alexandre Perreault";
+        email = "alexpqc@proton.me";
+      };
+      settings.alias = {
+        st = "status -s";
+        ci = "commit";
+        sw = "switch";
+        co = "checkout";
+      };
+    };
+
+    foot.enable = true;
   };
 
-  programs.foot.enable = true;
-
-  services.hyprpaper.enable = true;
-  services.hyprpolkitagent.enable = true;
-  services.hyprsunset.enable = true;
-  services.hypridle.enable = true;
+  services = {
+    hyprpaper.enable = true;
+    hyprpolkitagent.enable = true;
+    hyprsunset.enable = true;
+    hypridle.enable = true;
+  };
 
   # DO NOT TOUCH
   home.stateVersion = "26.05"; # Please read the comment before changing.
