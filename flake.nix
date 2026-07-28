@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lazyvim.url = "github:pfassina/lazyvim-nix";
+    nixcord.url = "github:4evy/nixcord";
     naviterm = {
       url = "gitlab:detoxify92/naviterm";
     };

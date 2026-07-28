@@ -290,6 +290,9 @@ end
 hl.bind(mainMod .. " + D",         hl.dsp.workspace.toggle_special("discord"))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:discord" }))
 
+-- Global keybind: pass CTRL + SHIFT + M (mute) through to Discord
+hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(discord)$" }))
+
 -- Full screen
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 

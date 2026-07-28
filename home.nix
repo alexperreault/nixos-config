@@ -5,7 +5,10 @@
   ...
 }:
 {
-  imports = [ inputs.lazyvim.homeManagerModules.default ];
+  imports = [
+    inputs.lazyvim.homeManagerModules.default
+    inputs.nixcord.homeModules.nixcord
+  ];
 
   home = {
     username = "alexp";
@@ -13,7 +16,6 @@
 
     packages = with pkgs; [
       bibata-cursors
-      discord
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -75,6 +77,14 @@
           exec uwsm start hyprland.desktop
         end
       '';
+    };
+
+    nixcord = {
+      enable = true;
+      discord = {
+        silenceNoModClientWarning = true;
+        krisp.enable = true;
+      };
     };
 
     ssh = {
