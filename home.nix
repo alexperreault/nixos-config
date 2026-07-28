@@ -103,6 +103,9 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      # Suppress direnv's own chatter (loading/using flake/export list);
+      # the devShell's shellHook and direnv errors still print.
+      silent = true;
     };
 
     fzf = {

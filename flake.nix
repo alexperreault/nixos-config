@@ -49,7 +49,7 @@
           just
         ];
         shellHook = ''
-          echo "nixos config — just fmt | just lint | just update"
+          echo "Entering nix DevShell for this repo"
         '';
       };
       nixosConfigurations = {
