@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784948311,
-        "narHash": "sha256-zXmyx6HuIjH0RQPV4VjVAXQttLyLDk55x9c3NmDke8c=",
+        "lastModified": 1785285785,
+        "narHash": "sha256-r1cMlvXjRVKe+uQ/GKwy4TpionpmbNgksFP2758D/MM=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "0d3cd1d6260b6f0ed232224c274c565407446fa1",
+        "rev": "da78262708d858861afbe1f68ea65fedda4054c4",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785269816,
-        "narHash": "sha256-6JkNDlJ18NY1iAuoSYCPDO7O+yYN/vPwpFmHOHNpVvY=",
+        "lastModified": 1785287013,
+        "narHash": "sha256-msJVg20mqqHLK8f9jG8pty12t7iB8+YXfPODINrrhfc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3d25fa94cf355cf7da64c77bb9c3c15806486329",
+        "rev": "4ebe20f1126cf4554e4b876dcd9fb0e159f88116",
         "type": "github"
       },
       "original": {
@@ -254,11 +254,11 @@
         "nixpkgs-nixcord": "nixpkgs-nixcord"
       },
       "locked": {
-        "lastModified": 1785269979,
-        "narHash": "sha256-A5nq9LbtgIrdAEXt9wWLzjGWdepLySrqXc9+Gn2bQxg=",
+        "lastModified": 1785270857,
+        "narHash": "sha256-PAZv1wI/QGQVx+TkRyrcZumu4ehXAblvw6Vo8jLVIls=",
         "owner": "4evy",
         "repo": "nixcord",
-        "rev": "7ac2020f050f5ecc38bf04fc96786a12eaaf0392",
+        "rev": "5fbabc42ef944c2eb3197577b6b4d36412020fee",
         "type": "github"
       },
       "original": {

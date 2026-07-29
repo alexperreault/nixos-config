@@ -25,6 +25,7 @@
       just
       lazygit
       libnotify
+      pika-backup
       playerctl
       ripgrep
       seahorse
