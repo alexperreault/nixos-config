@@ -4,6 +4,10 @@
   inputs,
   ...
 }:
+let
+  gitEmail = "alexpqc@proton.me";
+  sshSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqVzkvGdw1ihqyZuGX3Njrf4OW2lGtFAu0xdnKkYb2T";
+in
 {
   imports = [
     inputs.lazyvim.homeManagerModules.default
@@ -38,6 +42,7 @@
       ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
       ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
       ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
+      ".ssh/allowed_signers".text = "${gitEmail} ${sshSigningKey}\n";
     };
   };
 
@@ -133,8 +138,17 @@
       enable = true;
       settings.user = {
         name = "Alexandre Perreault";
-        email = "alexpqc@proton.me";
+        email = gitEmail;
+        # Literal key (not a path): signing goes through the ssh-agent, never
+        # the passphrase-protected private key file.
+        signingKey = "key::${sshSigningKey}";
       };
+      settings.gpg = {
+        format = "ssh";
+        ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+      };
+      settings.commit.gpgsign = true;
+      settings.tag.gpgsign = true;
       settings.alias = {
         st = "status -s";
         ci = "commit";
