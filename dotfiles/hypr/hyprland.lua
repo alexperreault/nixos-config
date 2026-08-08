@@ -266,6 +266,12 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(uwsm_start .. menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
+-- Screenshots (grim + slurp, satty to annotate)
+hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | satty -f - --copy-command wl-copy'))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim - | wl-copy'))
+hl.bind(mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd('grim - | satty -f - --copy-command wl-copy'))
+
 -- Move focus with mainMod + vim bindings
 hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
@@ -391,6 +397,16 @@ hl.window_rule({
     opacity           = "1.0 override 1.0 override",
     move              = { "monitor_w-window_w-40", "monitor_h*0.04" },
     rounding          = 0,
+})
+
+-- Satty screenshot annotator: floating, centered, 70% of the screen
+hl.window_rule({
+    name  = "satty-annotator",
+    match = { class = "^(com\\.gabm\\.satty)$" },
+
+    float  = true,
+    center = true,
+    size   = { "(monitor_w*0.7)", "(monitor_h*0.7)" },
 })
 
 -- Discord shenanigans

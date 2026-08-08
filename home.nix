@@ -20,6 +20,7 @@ in
 
     packages = with pkgs; [
       bibata-cursors
+      grim
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -32,7 +33,9 @@ in
       pika-backup
       playerctl
       ripgrep
+      satty
       seahorse
+      slurp
       swaynotificationcenter
       wiremix
       wl-clipboard
