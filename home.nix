@@ -136,27 +136,26 @@ in
 
     git = {
       enable = true;
-      settings.user = {
-        name = "Alexandre Perreault";
-        email = gitEmail;
-        # Literal key (not a path): signing goes through the ssh-agent, never
-        # the passphrase-protected private key file.
-        signingKey = "key::${sshSigningKey}";
-      };
-      settings.gpg = {
-        format = "ssh";
-        ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-      };
-      settings.commit.gpgsign = true;
-      settings.tag.gpgsign = true;
-      settings.alias = {
-        st = "status -s";
-        ci = "commit";
-        sw = "switch";
-        co = "checkout";
+      settings = {
+        user = {
+          name = "Alexandre Perreault";
+          email = gitEmail;
+          signingKey = "key::${sshSigningKey}";
+        };
+        gpg = {
+          format = "ssh";
+          ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+        };
+        commit.gpgsign = true;
+        tag.gpgsign = true;
+        alias = {
+          st = "status -s";
+          ci = "commit";
+          sw = "switch";
+          co = "checkout";
+        };
       };
     };
-
     foot.enable = true;
   };
 
