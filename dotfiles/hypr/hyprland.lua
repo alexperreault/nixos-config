@@ -269,7 +269,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- Screenshots (grim + slurp, satty to annotate)
 hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | satty -f - --copy-command wl-copy'))
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim - | wl-copy'))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim - | wl-copy && notify-send "capture effectuée"'))
 hl.bind(mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd('grim - | satty -f - --copy-command wl-copy'))
 
 -- Move focus with mainMod + vim bindings
@@ -391,11 +391,11 @@ hl.window_rule({
 
     float             = true,
     pin               = true,
-    size              = { 600, 338 },
+    size              = { 488, 274 },
     keep_aspect_ratio = true,
     border_size       = 0,
     opacity           = "1.0 override 1.0 override",
-    move              = { "monitor_w-window_w-40", "monitor_h*0.04" },
+    move              = { "monitor_w-window_w-96", "32" },
     rounding          = 0,
 })
 
