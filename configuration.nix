@@ -85,6 +85,13 @@
         PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
       };
     };
+
+    sunshine = {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true;
+      openFirewall = true;
+    };
   };
 
   i18n.defaultLocale = "en_CA.UTF-8";
