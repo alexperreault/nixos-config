@@ -8,7 +8,7 @@ hl.monitor({
     mode     = "3840x2160@240",
     position = "auto",
     scale    = 2,
-    vrr      = 2,
+    vrr      = 3,
 })
 
 
@@ -263,7 +263,16 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(uwsm_start .. "~/.config/hypr/scripts/foot-cwd.sh"))
+
+-- Terminal shenanigans to open in same dir
+hl.bind(mainMod .. " + return", function()
+  local w = hl.get_active_window()
+  if w and w.class == "foot" then
+    hl.dispatch(hl.dsp.send_shortcut({ mods = "CTRL SHIFT", key = "n", window = "pid:" .. w.pid }))
+  else
+    hl.dispatch(hl.dsp.exec_cmd(uwsm_start .. terminal))
+  end
+end)
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
