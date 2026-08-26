@@ -55,4 +55,4 @@ Apps are launched through `uwsm app --` (the session is started by uwsm from fis
 
 - Commit messages are generated, not written: `n<nixos-generation> : h<home-generation>` (e.g. `n58 : h32`). Use `just commit` rather than hand-writing a message, so the numbers match the generations actually installed.
 - `system.stateVersion` / `home.stateVersion` (`26.05`) must not be changed.
-- `docs/cursed_knowledge.md` (French) collects non-obvious gotchas discovered while building this config. When you hit surprising behaviour worth remembering, append a section there.
+- Don't touch cursed_knowledge.md
