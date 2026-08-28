@@ -26,7 +26,6 @@ in
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-      jq
       just
       lazygit
       libnotify
