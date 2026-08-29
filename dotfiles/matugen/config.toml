@@ -1,0 +1,18 @@
+# matugen — generates a Material You palette from the current wallpaper.
+#
+# Driven by dotfiles/hypr/scripts/theme.sh (`just theme`), which is in turn
+# called by wallpaper.sh whenever the wallpaper changes.
+#
+# Outputs go to ~/.local/state/matugen/, NOT into this repo: the wallpaper is
+# picked at random each session, so the palette is runtime state, not source.
+# Hyprland reads it directly via an absolute-path `require()`.
+
+[config]
+# Most wallpapers yield several candidate source colors and matugen refuses to
+# guess between them. Pinned so an unattended run at session start never stops
+# to prompt. 0 = most dominant color, 1 = second, and so on.
+source_color_index = 1
+
+[templates.hypr]
+input_path  = "~/nixos/dotfiles/matugen/templates/hypr-colors.lua"
+output_path = "~/.local/state/matugen/colors.lua"

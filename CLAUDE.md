@@ -17,6 +17,8 @@ just home-switch        # home-manager switch --flake .  + fsel --refresh-cache 
 just update-flake       # nix flake update
 just commit             # git add . + commit with generation numbers + push
 just update             # update-flake → nix-rebuild → wait-net → home-switch → commit
+just wallpaper          # random wallpaper from ~/Pictures/wallpaper + retheme
+just theme              # retheme from the wallpaper currently displayed
 ```
 
 There are no tests, linters, or a build step. Validation is "does it rebuild".
@@ -56,3 +58,37 @@ Apps are launched through `uwsm app --` (the session is started by uwsm from fis
 - Commit messages are generated, not written: `n<nixos-generation> : h<home-generation>` (e.g. `n58 : h32`). Use `just commit` rather than hand-writing a message, so the numbers match the generations actually installed.
 - `system.stateVersion` / `home.stateVersion` (`26.05`) must not be changed.
 - Don't touch cursed_knowledge.md
+
+## Theming (matugen)
+
+**Hyprland only.** matugen themes the window borders and shadow; nothing else consumes
+the palette. foot keeps its own static colors in `dotfiles/foot/foot.ini`.
+
+The wallpaper is **not** fixed. `dotfiles/hypr/scripts/wallpaper.sh` runs from
+`hl.on("hyprland.start", ...)` and picks a random image from `~/Pictures/wallpaper`,
+sets it through hyprpaper's IPC, then chains into `theme.sh`, which runs matugen and
+`hyprctl reload`s. `just wallpaper` rerolls; `just wallpaper <path>` forces one;
+`just theme` rethemes from whatever is currently displayed without changing it.
+
+Because the wallpaper is chosen per session, **the palette is runtime state, not
+source**. matugen writes `~/.local/state/matugen/colors.lua`, which is not in this repo
+and must not be — generated colors under `dotfiles/` would leave the git tree dirty
+with a random palette after every boot. `hyprland.lua` reads it by **absolute path**
+(`os.getenv("HOME") .. "/.local/state/matugen/colors.lua"`), wrapped in `pcall` because
+a failed `require` kills the whole Lua file. The `pcall` fallback holds the original
+hardcoded border colors, so a fresh machine works before matugen has ever run.
+
+`theme.sh` reads the current wallpaper from `hyprctl hyprpaper listactive`, falling back
+to `hyprpaper.conf` only when hyprpaper is not up. `hyprpaper.conf` is just the boot
+fallback now; it is not the source of truth. This hyprpaper build supports only
+`wallpaper` and `listactive` over IPC — no `preload`/`unload`.
+
+`wallpaper.sh` sniffs magic bytes rather than trusting extensions: `file` is not in this
+profile, and `~/Pictures/wallpaper/laurentides` is a WebP with no suffix.
+
+`source_color_index` is pinned in `dotfiles/matugen/config.toml` because most images
+yield several candidate source colors and matugen otherwise stops to prompt — fatal for
+an unattended run at session start.
+
+`hyprctl reload` does **not** re-fire `hyprland.start`, so `theme.sh` reloading Hyprland
+cannot loop back into `wallpaper.sh`.

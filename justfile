@@ -47,3 +47,11 @@ fmt:
 # Lint with statix
 lint:
     statix check .
+
+# Pick a random wallpaper from ~/Pictures/wallpaper and retheme from it
+wallpaper *ARGS:
+    dotfiles/hypr/scripts/wallpaper.sh {{ARGS}}
+
+# Regenerate the matugen palette from the wallpaper currently displayed
+theme:
+    dotfiles/hypr/scripts/theme.sh

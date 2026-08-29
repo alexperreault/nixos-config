@@ -29,6 +29,7 @@ in
       just
       lazygit
       libnotify
+      matugen
       pika-backup
       playerctl
       ripgrep
@@ -42,6 +43,7 @@ in
 
     file = {
       ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
+      ".config/matugen/config.toml".source = dotfiles/matugen/config.toml;
       ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
       ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
       ".ssh/allowed_signers".text = "${gitEmail} ${sshSigningKey}\n";
