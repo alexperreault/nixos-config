@@ -383,11 +383,11 @@
         "nvf": "nvf"
       },
       "locked": {
-        "lastModified": 1787977160,
-        "narHash": "sha256-c/BDnLaCvJe0m2x47x0gLznw/mcCaJHO/i9dibMrIzk=",
+        "lastModified": 1788022455,
+        "narHash": "sha256-RrK78n4wyOKT0tK7cl72a77acjQIWUQ1knzNAqnEg1E=",
         "owner": "alexperreault",
         "repo": "nvim-conf",
-        "rev": "f2aee7ce408a62b1ec0b1d14a4b5037ff27f2a48",
+        "rev": "669afb4dfe362d02887a25695cc77a2e32a532aa",
         "type": "github"
       },
       "original": {
