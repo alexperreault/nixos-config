@@ -10,7 +10,6 @@ let
 in
 {
   imports = [
-    inputs.lazyvim.homeManagerModules.default
     inputs.nixcord.homeModules.nixcord
   ];
 
@@ -25,6 +24,7 @@ in
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.nvim-conf.packages.${pkgs.stdenv.hostPlatform.system}.nvim
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       just
       lazygit
@@ -53,23 +53,6 @@ in
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
 
   programs = {
-    lazyvim = {
-      enable = true;
-
-      extras = {
-        lang.nix = {
-          enable = true;
-          installDependencies = true;
-        };
-      };
-
-      extraPackages = with pkgs; [
-        nixd
-        nixfmt
-        statix
-      ];
-    };
-
     fish = {
       enable = true;
       shellAliases = {
