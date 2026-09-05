@@ -22,7 +22,6 @@ in
       grim
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.nvim-conf.packages.${pkgs.stdenv.hostPlatform.system}.nvim
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -30,13 +29,14 @@ in
       lazygit
       libnotify
       matugen
+      papirus-icon-theme
       pika-backup
       playerctl
+      quickshell
       ripgrep
       satty
       seahorse
       slurp
-      swaynotificationcenter
       wiremix
       wl-clipboard
     ];
@@ -45,7 +45,6 @@ in
       ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
       ".config/matugen/config.toml".source = dotfiles/matugen/config.toml;
       ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
-      ".config/fsel/config.toml".source = dotfiles/fsel/config.toml;
       ".ssh/allowed_signers".text = "${gitEmail} ${sshSigningKey}\n";
     };
   };
@@ -53,6 +52,11 @@ in
   # Hyprland dotfiles symlink
   xdg.configFile."hypr".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
+
+  # Quickshell dotfiles symlink (edits are live: Quickshell's own file
+  # watcher hot-reloads through the symlink, unlike Hyprland's).
+  xdg.configFile."quickshell".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/quickshell";
 
   programs = {
     fish = {

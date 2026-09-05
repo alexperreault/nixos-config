@@ -22,7 +22,6 @@ local uwsm_start  = "uwsm app -- "
 -- Set programs that you use
 local terminal    = "foot"
 local browser     = "zen"
-local menu        = "foot --title=launcher fsel -d"
 
 
 -------------------
@@ -38,6 +37,7 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd(uwsm_start .. terminal)
   hl.exec_cmd(uwsm_start .. "discord")
+  hl.exec_cmd(uwsm_start .. "quickshell")
   -- Random wallpaper for the session, then regenerate the palette from it.
   -- Not a uwsm app: it is a short-lived script, not a session-scoped process.
   hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/wallpaper.sh")
@@ -293,11 +293,11 @@ end)
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd(uwsm_start .. "foot --title=powermenu ~/.config/hypr/scripts/powermenu.sh"))
+hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("qs ipc call powermenu toggle"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd([[notify-send "$(date '+%A, %B %d | %H:%M')"]]))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(uwsm_start .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(uwsm_start .. menu))
+hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 -- Screenshots (grim + slurp, satty to annotate)
@@ -406,17 +406,9 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
--- fsel launcher: floating, centered, fixed terminal size
-hl.window_rule({
-    name  = "fsel-launcher",
-    match = { title = "launcher|powermenu" },
-
-    float  = true,
-    center = true,
-    size   = { 500, 430 },
-    dim_around = true,
-    confine_pointer = true,
-})
+-- Quickshell surfaces (OSD, notifications, launcher, power menu) pop without
+-- a compositor layer fade; each keeps its own QML opacity transition instead.
+hl.layer_rule({ match = { namespace = "^(qs-launcher|qs-powermenu|qs-osd|qs-notifications)$" }, no_anim = true, animation = "none" })
 
 -- Firefox Picture-in-Picture: floating, pinned to all workspaces, no border, top-right corner
 hl.window_rule({

@@ -16,3 +16,7 @@ source_color_index = 1
 [templates.hypr]
 input_path  = "~/nixos/dotfiles/matugen/templates/hypr-colors.lua"
 output_path = "~/.local/state/matugen/colors.lua"
+
+[templates.quickshell]
+input_path  = "~/nixos/dotfiles/matugen/templates/quickshell-colors.json"
+output_path = "~/.local/state/matugen/colors.json"

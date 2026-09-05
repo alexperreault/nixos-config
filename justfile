@@ -25,7 +25,11 @@ wait-net:
 # Rebuild Home manager and switch
 home-switch:
     home-manager switch --flake .
-    fsel --refresh-cache
+
+# Kill and relaunch quickshell (escape hatch when hot-reload wedges)
+shell-restart:
+    pkill -u "$(whoami)" -x quickshell || true
+    uwsm app -- quickshell &
 
 # Stage changes, grab the active generation number, commit, and push
 commit:

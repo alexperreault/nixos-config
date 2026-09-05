@@ -1,0 +1,3 @@
+module qs.Ui
+Card 1.0 Card.qml
+MenuList 1.0 MenuList.qml
