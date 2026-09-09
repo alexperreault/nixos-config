@@ -22,10 +22,6 @@ wait-net:
     echo "network did not come back within 2 minutes" >&2
     exit 1
 
-# Rebuild Home manager and switch
-home-switch:
-    home-manager switch --flake .
-
 # Kill and relaunch quickshell (escape hatch when hot-reload wedges)
 shell-restart:
     pkill -u "$(whoami)" -x quickshell || true
@@ -41,8 +37,8 @@ commit:
     git commit -m "n${GEN_NIXOS} : h${GEN_HOME}"
     git push
 
-# Update flake, rebuild and switch, then commit the generation
-update: update-flake nix-rebuild wait-net home-switch commit
+# Update flake, rebuild and switch (system + home in one), then commit the generation
+update: update-flake nix-rebuild wait-net commit
 
 # Format the flake with nixfmt
 fmt:

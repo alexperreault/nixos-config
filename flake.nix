@@ -55,15 +55,13 @@
           modules = [
             ./configuration.nix
             { nixpkgs.hostPlatform = "x86_64-linux"; }
-          ];
-        };
-      };
-      homeConfigurations = {
-        alexp = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
-          modules = [
-            ./home.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.alexp = import ./home.nix;
+            }
           ];
         };
       };

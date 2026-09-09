@@ -11,38 +11,37 @@ Personal NixOS + Home Manager configuration for a single machine: host `north`, 
 All routine work goes through the `justfile`:
 
 ```
-just nix-rebuild        # sudo nixos-rebuild switch --flake .   (system)
-just nix-rebuild-test   # sudo nixos-rebuild test --flake .     (system, no bootloader entry)
-just home-switch        # home-manager switch --flake .  + fsel --refresh-cache  (user)
+just nix-rebuild        # sudo nixos-rebuild switch --flake .   (system + home, one generation each)
+just nix-rebuild-test   # sudo nixos-rebuild test --flake .     (system + home, no bootloader entry)
 just update-flake       # nix flake update
 just commit             # git add . + commit with generation numbers + push
-just update             # update-flake → nix-rebuild → wait-net → home-switch → commit
+just update             # update-flake → nix-rebuild → wait-net → commit
 just wallpaper          # random wallpaper from ~/Pictures/wallpaper + retheme
 just theme              # retheme from the wallpaper currently displayed
 ```
 
 There are no tests, linters, or a build step. Validation is "does it rebuild".
 
-`just wait-net` exists because `nixos-rebuild switch` restarts NetworkManager; the following `home-switch` needs `cache.nixos.org` reachable. Keep it between system and home rebuilds in any chained recipe.
+`just wait-net` exists because `nixos-rebuild switch` restarts NetworkManager; the following `commit` needs to reach GitHub to push. Keep it between the rebuild and the commit in any chained recipe.
 
 ## Architecture
 
-**Two independent configurations, not one.** `flake.nix` exposes:
+**One configuration, home-manager as a NixOS module.** `flake.nix` exposes a single `nixosConfigurations.north`, built from:
 
-- `nixosConfigurations.north` — `configuration.nix` + `hardware-configuration.nix`
-- `homeConfigurations.alexp` — `home.nix`, **standalone** Home Manager (not imported as a NixOS module)
+- `configuration.nix` + `hardware-configuration.nix` — system level
+- `home-manager.nixosModules.home-manager`, with `home-manager.users.alexp = import ./home.nix;` — user level, activated as part of the same system generation (`useGlobalPkgs`/`useUserPackages` = true, so home-manager shares the system's `pkgs` instead of pinning its own)
 
-Consequence: system-level and user-level changes are applied by separate commands and produce separate generation numbers. Changing `home.nix` never requires a `nixos-rebuild`, and vice versa. When adding a package, decide which layer: system-wide/needed at boot or for a service → `configuration.nix` `environment.systemPackages`; anything user-facing → `home.nix` `home.packages`.
+Consequence: `sudo nixos-rebuild switch` (i.e. `just nix-rebuild`) applies both layers in one command, and `system.autoUpgrade`'s nightly run now updates home-manager too, not just the system. There is no more standalone `home-manager switch` — home.nix is only ever built as part of the NixOS system closure. Deciding which file a setting goes in is still meaningful even though one command applies both: system-wide/needed at boot or for a service → `configuration.nix` `environment.systemPackages`; anything user-facing → `home.nix` `home.packages`.
 
-**Flake inputs as package sources.** `naviterm`, `zen-browser`, `fsel`, `claude-code` are consumed in `home.nix` as `inputs.<name>.packages.${pkgs.stdenv.hostPlatform.system}.default`. Note that `naviterm` and `fsel` deliberately do *not* set `inputs.nixpkgs.follows = "nixpkgs"` — they broke when forced onto this flake's nixpkgs. Don't "fix" that by re-adding the follows line.
+**Flake inputs as package sources.** `naviterm`, `zen-browser`, `claude-code` are consumed in `home.nix` as `inputs.<name>.packages.${pkgs.stdenv.hostPlatform.system}.default`. Note that `naviterm` deliberately does *not* set `inputs.nixpkgs.follows = "nixpkgs"` — it broke when forced onto this flake's nixpkgs. Don't "fix" that by re-adding the follows line.
 
-`inputs` is threaded to both configurations via `specialArgs` / `extraSpecialArgs`, so any module can take `{ inputs, ... }`.
+`inputs` is threaded to `configuration.nix` via `specialArgs` and to `home.nix` via `home-manager.extraSpecialArgs`, so any module can take `{ inputs, ... }`.
 
 ## Dotfiles: two delivery mechanisms
 
 `dotfiles/` holds non-Nix config, wired up in `home.nix` in two different ways:
 
-- **`home.file."...".source`** (foot, naviterm, fsel) — copied into the Nix store. Editing the file does nothing until `just home-switch`.
+- **`home.file."...".source`** (foot, naviterm) — copied into the Nix store. Editing the file does nothing until `just nix-rebuild`.
 - **`xdg.configFile."hypr".source = mkOutOfStoreSymlink`** — `~/.config/hypr` symlinks straight into this repo. Hyprland edits take effect without any rebuild.
 
 Because the Hyprland config is a symlink, Hyprland's automatic hot reload does **not** fire; run `hyprctl reload` manually after editing (see `docs/cursed_knowledge.md`).
