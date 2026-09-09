@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal NixOS + Home Manager configuration for a single machine: host `north`, user `alexp`, x86_64-linux, nixpkgs `nixos-unstable`. Wayland/Hyprland desktop, fish shell, foot terminal.
+Personal NixOS + Home Manager configuration, structured to support more than one machine. Currently one device: host `north`, user `alexp`, x86_64-linux, nixpkgs `nixos-unstable`. Wayland/Hyprland desktop, fish shell, foot terminal.
 
 ## Commands
 
@@ -26,16 +26,22 @@ There are no tests, linters, or a build step. Validation is "does it rebuild".
 
 ## Architecture
 
-**One configuration, home-manager as a NixOS module.** `flake.nix` exposes a single `nixosConfigurations.north`, built from:
+**Modular: `modules/` for shared config, `devices/<name>/` for per-machine config.** `flake.nix` exposes `nixosConfigurations.north`, built from:
 
-- `configuration.nix` + `hardware-configuration.nix` — system level
+- `devices/north/configuration.nix` — imports `hardware-configuration.nix` (same directory) plus every module under `modules/`, and holds only what's specific to this machine: `boot` (bootloader/kernel), `networking.hostName`, `system.autoUpgrade`, the PAM/fido2 setup, device-specific `fileSystems` entries, and `system.stateVersion`.
+- `modules/core.nix` — everything generic enough to apply to any device: Hyprland, tailscale, base networking, audio, fonts, the `alexp` user, etc.
+- `modules/gaming.nix` — gaming-specific config: Steam, Sunshine (game streaming), the controller udev rule.
 - `home-manager.nixosModules.home-manager`, with `home-manager.users.alexp = import ./home.nix;` — user level, activated as part of the same system generation (`useGlobalPkgs`/`useUserPackages` = true, so home-manager shares the system's `pkgs` instead of pinning its own)
 
-Consequence: `sudo nixos-rebuild switch` (i.e. `just nix-rebuild`) applies both layers in one command, and `system.autoUpgrade`'s nightly run now updates home-manager too, not just the system. There is no more standalone `home-manager switch` — home.nix is only ever built as part of the NixOS system closure. Deciding which file a setting goes in is still meaningful even though one command applies both: system-wide/needed at boot or for a service → `configuration.nix` `environment.systemPackages`; anything user-facing → `home.nix` `home.packages`.
+Adding a second device means creating `devices/<name>/{configuration.nix,hardware-configuration.nix}` and a new `nixosConfigurations.<name>` in `flake.nix`; it imports the same `modules/` files (opting out of `modules/gaming.nix` if that device isn't for gaming) and supplies its own device-specific bits.
+
+Consequence: `sudo nixos-rebuild switch` (i.e. `just nix-rebuild`) applies both layers in one command, and `system.autoUpgrade`'s nightly run now updates home-manager too, not just the system. There is no more standalone `home-manager switch` — home.nix is only ever built as part of the NixOS system closure. Deciding which file a setting goes in is still meaningful even though one command applies both: system-wide/needed at boot or for a service → a `modules/*.nix` or device `configuration.nix` `environment.systemPackages`; anything user-facing → `home.nix` `home.packages`.
 
 **Flake inputs as package sources.** `naviterm`, `zen-browser`, `claude-code` are consumed in `home.nix` as `inputs.<name>.packages.${pkgs.stdenv.hostPlatform.system}.default`. Note that `naviterm` deliberately does *not* set `inputs.nixpkgs.follows = "nixpkgs"` — it broke when forced onto this flake's nixpkgs. Don't "fix" that by re-adding the follows line.
 
-`inputs` is threaded to `configuration.nix` via `specialArgs` and to `home.nix` via `home-manager.extraSpecialArgs`, so any module can take `{ inputs, ... }`.
+`inputs` is threaded to `devices/north/configuration.nix` via `specialArgs` and to `home.nix` via `home-manager.extraSpecialArgs`, so any module can take `{ inputs, ... }`.
+
+**New files must be `git add`ed before Nix can see them.** Flakes only evaluate tracked files; a new `devices/` or `modules/` file that isn't staged in git fails evaluation with "Path ... is not tracked by Git", not a normal Nix error.
 
 ## Dotfiles: two delivery mechanisms
 

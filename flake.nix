@@ -53,7 +53,7 @@
         north = lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            ./configuration.nix
+            ./devices/north/configuration.nix
             { nixpkgs.hostPlatform = "x86_64-linux"; }
             home-manager.nixosModules.home-manager
             {
