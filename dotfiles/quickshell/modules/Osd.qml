@@ -20,6 +20,11 @@ Item {
     property real value: 0
     property real maxValue: 100
 
+    // Card grows to fit the message (e.g. a long track title) and shrinks
+    // back down for short ones (e.g. "75%"), clamped to this range.
+    property int minCardWidth: 260
+    property int maxCardWidth: 420
+
     // Suppresses the flash that would otherwise fire once at startup, when
     // Pipewire/Mpris properties first settle to their initial values.
     property bool ready: false
@@ -108,23 +113,29 @@ Item {
 
         Card {
             id: card
-            width: 260
+            width: Math.min(root.maxCardWidth, Math.max(root.minCardWidth, contentRow.implicitWidth + Style.space(32)))
             height: 64
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Style.space(60)
             opacity: root.opened ? 1 : 0
 
+            Behavior on width {
+                NumberAnimation { duration: Style.animationDuration }
+            }
+
             Behavior on opacity {
                 NumberAnimation { duration: Style.animationDuration }
             }
 
             Row {
-                anchors.fill: parent
-                anchors.margins: Style.space(16)
+                id: contentRow
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: Style.space(14)
 
                 Text {
+                    id: iconText
                     anchors.verticalCenter: parent.verticalCenter
                     text: root.icon
                     font.family: Style.fontFamily
@@ -153,9 +164,12 @@ Item {
                 }
 
                 Text {
+                    id: messageText
                     visible: !root.hasProgress && root.message !== ""
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 100
+                    // Grows with the text, capped so the card never exceeds
+                    // maxCardWidth; elide kicks in once the cap is hit.
+                    width: Math.min(implicitWidth, root.maxCardWidth - Style.space(32) - iconText.implicitWidth - contentRow.spacing)
                     text: root.message
                     elide: Text.ElideRight
                     font.family: Style.fontFamily
