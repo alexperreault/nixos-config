@@ -31,6 +31,15 @@
 
   time.timeZone = "America/Toronto";
 
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:alexperreault/nixos-config#north";
+    flags = [ "--refresh" ];
+    dates = "05:00";
+    randomizedDelaySec = "30min";
+    allowReboot = false;
+  };
+
   services = {
     avahi = {
       enable = true;
@@ -74,7 +83,7 @@
 
     openssh = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       settings = {
         X11Forwarding = false;
         PasswordAuthentication = false;
@@ -92,6 +101,11 @@
       capSysAdmin = true;
       openFirewall = true;
     };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   i18n.defaultLocale = "en_CA.UTF-8";
@@ -99,6 +113,10 @@
   console.keyMap = "cf";
 
   hardware.graphics.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
   nix = {
     settings = {
@@ -187,7 +205,7 @@
   ];
 
   fileSystems."/mnt/musique" = {
-    device = "nas.alexpqc.com:/nas/media_nas/jellyfin/Musique";
+    device = "nas:/nas/media_nas/jellyfin/Musique";
     fsType = "nfs";
     options = [
       "ro"

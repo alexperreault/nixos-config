@@ -19,6 +19,7 @@ in
 
     packages = with pkgs; [
       bibata-cursors
+      bluetui
       grim
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -84,28 +85,7 @@ in
       };
     };
 
-    ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-      settings = {
-        "prod" = {
-          HostName = "prod.alexpqc.com";
-        };
-        "pass" = {
-          HostName = "192.168.9.3";
-        };
-        "media" = {
-          HostName = "media.alexpqc.com";
-        };
-        "nas" = {
-          HostName = "nas.alexpqc.com";
-        };
-        "pve" = {
-          HostName = "192.168.8.9";
-          User = "root";
-        };
-      };
-    };
+    ssh.enable = true;
 
     direnv = {
       enable = true;
