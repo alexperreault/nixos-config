@@ -176,15 +176,6 @@
       ];
     };
 
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-    };
-
-    git.enable = true;
-
     fish.enable = true;
   };
 
@@ -192,10 +183,8 @@
 
   environment = {
     systemPackages = with pkgs; [
-      clang
       ghostty.terminfo
       wireguard-tools
-      wget
     ];
     sessionVariables.NIXOS_OZONE_WL = "1";
   };

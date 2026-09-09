@@ -38,6 +38,7 @@ in
       satty
       seahorse
       slurp
+      wget
       wiremix
       wl-clipboard
     ];
