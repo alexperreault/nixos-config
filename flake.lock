@@ -8,11 +8,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1788987690,
-        "narHash": "sha256-/TSj85TBwXmytliESwnhHrlFAIw2pwSOgAmI0MNCGQk=",
+        "lastModified": 1789074092,
+        "narHash": "sha256-QCXTUbd4FuwOHO7LgJws78YTRcco4xgR8RoYgKLvd9w=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "72091e21c74c14ccb6554a76e4416608039b289d",
+        "rev": "1f88b393ac054378c393f914dc83d08a6ef5daeb",
         "type": "github"
       },
       "original": {
@@ -62,11 +62,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789012927,
-        "narHash": "sha256-+h1H0g2XMGXK0fNUlX4ajCmCz8u05IR7k0Cj2MJviBY=",
+        "lastModified": 1789099078,
+        "narHash": "sha256-zzHj2wl69724lzx7DLAVziWbL75wRIk+xJ3duD0Bgrc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "df044b78fd9ec60d0e54752169666e6e1d393798",
+        "rev": "f10b3f2ad4aae9259617a1ff518cc921e3394228",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1789029226,
-        "narHash": "sha256-dk2p8SjpJ2sRHHpmSA+ps4d2uhQjtkdKGC2+RcyZYPE=",
+        "lastModified": 1789115297,
+        "narHash": "sha256-Oa+iNm4QccTh+ytbs2N9EHTNZ5nDI5Baf7fIfxbLH50=",
         "owner": "4evy",
         "repo": "nixcord",
-        "rev": "177141d589014f014ac2b05cd8e2235886868e2f",
+        "rev": "d19bed0c9ad52678cdd1e0fd6fa2f21d6abab374",
         "type": "github"
       },
       "original": {
@@ -226,11 +226,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1788881743,
-        "narHash": "sha256-151taSq/21cxagiIu7hyMVl68+FbHfwBP4lh6TB6KOM=",
-        "rev": "d6524aaca2ff07876657ae2b323f24be4874944b",
+        "lastModified": 1789006805,
+        "narHash": "sha256-q+GdZ3yq4Y2LXHRK0vKTM32Hwy7RCgUgy+hjwZLI5pY=",
+        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1069856.d6524aaca2ff/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1070770.8ce4ef6cb6f8/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
