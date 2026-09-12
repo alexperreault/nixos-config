@@ -54,6 +54,9 @@
     fsType = "nfs";
     options = [
       "ro"
+      "soft"
+      "timeo=30"
+      "retrans=1"
       "x-systemd.automount"
       "noauto"
     ];
