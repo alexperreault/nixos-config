@@ -7,7 +7,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixcord.url = "github:4evy/nixcord";
     nvim-conf.url = "github:alexperreault/nvim-conf";
     naviterm = {
       url = "gitlab:detoxify92/naviterm";

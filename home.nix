@@ -9,10 +9,6 @@ let
   sshSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqVzkvGdw1ihqyZuGX3Njrf4OW2lGtFAu0xdnKkYb2T";
 in
 {
-  imports = [
-    inputs.nixcord.homeModules.nixcord
-  ];
-
   home = {
     username = "alexp";
     homeDirectory = "/home/alexp";
@@ -20,6 +16,7 @@ in
     packages = with pkgs; [
       bibata-cursors
       bluetui
+      brave-origin
       grim
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -76,14 +73,6 @@ in
           exec uwsm start hyprland.desktop
         end
       '';
-    };
-
-    nixcord = {
-      enable = true;
-      discord = {
-        silenceNoModClientWarning = true;
-        krisp.enable = true;
-      };
     };
 
     ssh = {
