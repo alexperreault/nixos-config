@@ -26,6 +26,7 @@
       xkb = {
         layout = "ca";
         variant = "multix";
+        options = "caps:escape";
       };
     };
 
