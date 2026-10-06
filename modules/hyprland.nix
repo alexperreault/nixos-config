@@ -17,6 +17,7 @@
           grim
           libnotify
           matugen
+          nautilus
           papirus-icon-theme
           playerctl
           wiremix
