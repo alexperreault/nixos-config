@@ -107,12 +107,6 @@
   };
 
   programs = {
-    # Hyprland :D
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
-
     fish.enable = true;
   };
 
@@ -123,7 +117,6 @@
       ghostty.terminfo
       wireguard-tools
     ];
-    sessionVariables.NIXOS_OZONE_WL = "1";
   };
 
   fonts.packages = with pkgs; [

@@ -14,10 +14,7 @@ in
     homeDirectory = "/home/alexp";
 
     packages = with pkgs; [
-      bibata-cursors
-      bluetui
       brave-origin
-      grim
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -25,37 +22,18 @@ in
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       just
       lazygit
-      libnotify
-      matugen
-      papirus-icon-theme
       pika-backup
-      playerctl
-      quickshell
       ripgrep
-      satty
       seahorse
-      slurp
       wget
-      wiremix
-      wl-clipboard
     ];
 
     file = {
-      ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
-      ".config/matugen/config.toml".source = dotfiles/matugen/config.toml;
-      ".config/naviterm/config.ini".source = dotfiles/naviterm/config.ini;
+      ".config/foot/foot.ini".source = ../dotfiles/foot/foot.ini;
+      ".config/naviterm/config.ini".source = ../dotfiles/naviterm/config.ini;
       ".ssh/allowed_signers".text = "${gitEmail} ${sshSigningKey}\n";
     };
   };
-
-  # Hyprland dotfiles symlink
-  xdg.configFile."hypr".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/hypr";
-
-  # Quickshell dotfiles symlink (edits are live: Quickshell's own file
-  # watcher hot-reloads through the symlink, unlike Hyprland's).
-  xdg.configFile."quickshell".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/quickshell";
 
   programs = {
     fish = {
@@ -67,11 +45,6 @@ in
       };
       interactiveShellInit = ''
         set -g fish_greeting ""
-      '';
-      loginShellInit = ''
-        if uwsm check may-start
-          exec uwsm start hyprland.desktop
-        end
       '';
     };
 
@@ -133,13 +106,6 @@ in
       };
     };
     foot.enable = true;
-  };
-
-  services = {
-    hyprpaper.enable = true;
-    hyprpolkitagent.enable = true;
-    hyprsunset.enable = true;
-    hypridle.enable = true;
   };
 
   # DO NOT TOUCH

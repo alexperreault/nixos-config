@@ -8,7 +8,9 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/core.nix
+    ../../modules/hyprland.nix
     ../../modules/gaming.nix
+    ../../modules/home-manager.nix
   ];
 
   boot = {
@@ -25,6 +27,8 @@
     # Blank the console (TTY) after 60s idle, like `setterm --blank` + consoleblank=60
     kernelParams = [ "consoleblank=60" ];
   };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   networking.hostName = "north";
 
