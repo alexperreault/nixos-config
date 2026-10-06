@@ -28,6 +28,11 @@
 
   networking.hostName = "north";
 
+  hardware.keyboard.qmk = {
+    enable = true;
+    keychronSupport = true;
+  };
+
   system.autoUpgrade = {
     enable = true;
     flake = "github:alexperreault/nixos-config#north";

@@ -1,10 +1,6 @@
 { pkgs, ... }:
 {
   services = {
-    udev.extraRules = ''
-      KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_VENDOR_ID}=="3434", ENV{ID_INPUT_JOYSTICK}=="*?", ENV{ID_INPUT_JOYSTICK}=""
-    '';
-
     sunshine = {
       enable = true;
       autoStart = true;
