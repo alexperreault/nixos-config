@@ -7,6 +7,8 @@
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  services.gvfs.enable = true;
+
   home-manager.users.alexp =
     { config, pkgs, ... }:
     {
@@ -38,6 +40,14 @@
       # watcher hot-reloads through the symlink, unlike Hyprland's).
       xdg.configFile."quickshell".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/dotfiles/quickshell";
+
+      gtk = {
+        enable = true;
+        iconTheme = {
+          name = "Adwaita";
+          package = pkgs.adwaita-icon-theme;
+        };
+      };
 
       programs.fish.loginShellInit = ''
         if uwsm check may-start

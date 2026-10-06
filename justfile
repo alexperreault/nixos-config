@@ -6,6 +6,10 @@ nix-rebuild:
 nix-rebuild-test:
     sudo nixos-rebuild test --flake .
 
+# Rebuild from the GitHub remote, bypassing the flake cache
+nix-rebuild-remote:
+    sudo nixos-rebuild switch --refresh --flake github:alexperreault/nixos-config#north
+
 # Kill and relaunch quickshell (escape hatch when hot-reload wedges)
 shell-restart:
     pkill -u "$(whoami)" -x quickshell || true

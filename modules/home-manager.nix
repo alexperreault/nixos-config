@@ -5,6 +5,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "bak";
     extraSpecialArgs = { inherit inputs; };
     users.alexp = import ./home.nix;
   };
