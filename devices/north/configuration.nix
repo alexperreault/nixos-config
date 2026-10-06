@@ -58,19 +58,6 @@
     pam.u2f.settings.cue = true;
   };
 
-  fileSystems."/mnt/musique" = {
-    device = "nas:/nas/media_nas/jellyfin/Musique";
-    fsType = "nfs";
-    options = [
-      "ro"
-      "soft"
-      "timeo=30"
-      "retrans=1"
-      "x-systemd.automount"
-      "noauto"
-    ];
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
