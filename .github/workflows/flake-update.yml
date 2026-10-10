@@ -16,7 +16,13 @@ jobs:
       - uses: cachix/install-nix-action@v31
 
       - run: nix flake update
-      
+
+      - name: Check that all hosts evaluate
+        run: |
+          for host in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | jq -r '.[]'); do
+            nix eval --raw ".#nixosConfigurations.$host.config.system.build.toplevel.drvPath"
+          done
+
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
