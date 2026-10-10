@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    lutris
+  ];
+
   services = {
     sunshine = {
       enable = true;
