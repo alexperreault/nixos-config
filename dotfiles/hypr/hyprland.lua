@@ -22,8 +22,6 @@ local uwsm_start = "uwsm app -- "
 local terminal = "foot"
 local browser = "zen"
 
-local discordApp = "brave-origin --app=https://discord.com/app"
-
 -------------------
 ---- AUTOSTART ----
 -------------------
@@ -36,7 +34,6 @@ local discordApp = "brave-origin --app=https://discord.com/app"
 hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd(uwsm_start .. terminal)
-    hl.exec_cmd(uwsm_start .. discordApp)
     hl.exec_cmd(uwsm_start .. "quickshell")
     -- Random wallpaper for the session, then regenerate the palette from it.
     -- Not a uwsm app: it is a short-lived script, not a session-scoped process.
@@ -324,13 +321,6 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + D", hl.dsp.workspace.toggle_special("discord"))
-hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:discord" }))
-
--- Global keybind: pass CTRL + SHIFT + M (mute) through to Discord
-hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(brave-discord\\.com__app-Default)$" }))
-
 -- Full screen
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
@@ -452,17 +442,3 @@ hl.window_rule({
     center = true,
     size = { "(monitor_w*0.7)", "(monitor_h*0.7)" },
 })
-
--- Discord shenanigans
-hl.window_rule({
-    name = "discord-workspace-colored-border",
-    match = { initial_class = "^(brave-discord\\.com__app-Default)$" },
-
-    border_color = "rgb(5865F2)",
-    pseudo = true,
-    workspace = "special:discord",
-    size = { "(monitor_w*0.95)", "(monitor_h*0.95)" },
-    no_initial_focus = true,
-    dim_around = true,
-})
-hl.workspace_rule({ workspace = "special:discord", on_created_empty = uwsm_start .. discordApp })
