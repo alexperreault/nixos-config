@@ -9,7 +9,7 @@
     };
     nvim-conf.url = "github:alexperreault/nvim-conf";
     naviterm = {
-      url = "gitlab:detoxify92/naviterm";
+      url = "git+https://gitlab.com/detoxify92/naviterm.git";
     };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
