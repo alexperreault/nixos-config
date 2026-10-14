@@ -34,7 +34,7 @@
     enable = true;
     flake = "github:alexperreault/nixos-config#rve";
     flags = [ "--refresh" ];
-    dates = "05:00";
+    dates = "Sat 05:00";
     randomizedDelaySec = "30min";
     allowReboot = false;
   };
