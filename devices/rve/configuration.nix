@@ -11,6 +11,7 @@
     ../../modules/core.nix
     ../../modules/hyprland.nix
     ../../modules/gnome.nix
+    ../../modules/casting.nix
     ../../modules/home-manager.nix
   ];
 
@@ -40,8 +41,6 @@
   };
 
   services = {
-    # GNOME turns avahi on by default; keep it off on the work network
-    avahi.enable = false;
     fwupd.enable = true;
     # ST-Link probes without root
     udev.packages = [ pkgs.stlink ];

@@ -10,6 +10,7 @@
     ../../modules/core.nix
     ../../modules/hyprland.nix
     ../../modules/gaming.nix
+    ../../modules/casting.nix
     ../../modules/home-manager.nix
   ];
 
