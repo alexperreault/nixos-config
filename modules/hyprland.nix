@@ -10,7 +10,13 @@
   services.gvfs.enable = true;
 
   home-manager.users.alexp =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      osConfig,
+      ...
+    }:
     {
       home = {
         packages = with pkgs; [
@@ -49,7 +55,9 @@
         };
       };
 
-      programs.fish.loginShellInit = ''
+      # With a display manager, the session is picked there; a login shell
+      # inside the GNOME session must not exec into Hyprland.
+      programs.fish.loginShellInit = lib.mkIf (!osConfig.services.displayManager.gdm.enable) ''
         if uwsm check may-start
           exec uwsm start hyprland.desktop
         end

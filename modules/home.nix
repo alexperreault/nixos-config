@@ -31,7 +31,10 @@ in
     file = {
       ".config/foot/foot.ini".source = ../dotfiles/foot/foot.ini;
       ".config/naviterm/config.ini".source = ../dotfiles/naviterm/config.ini;
-      ".ssh/allowed_signers".text = "${gitEmail} ${sshSigningKey}\n";
+      ".ssh/allowed_signers".text = ''
+        ${gitEmail} ${sshSigningKey}
+        a.perreault@rve.ca ${sshSigningKey}
+      '';
     };
   };
 
