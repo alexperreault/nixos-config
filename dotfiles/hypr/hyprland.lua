@@ -3,13 +3,17 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-    output = "desc:ASUSTek",
-    mode = "3840x2160@240",
-    position = "auto",
-    scale = 2,
-    vrr = 3,
-})
+-- Layout saved by nwg-displays (settings menu > Displays) into monitors.lua next
+-- to this file, per machine and gitignored. The ASUS rule is the fallback until then.
+if not pcall(require, "monitors") then
+    hl.monitor({
+        output = "desc:ASUSTek",
+        mode = "3840x2160@240",
+        position = "auto",
+        scale = 2,
+        vrr = 3,
+    })
+end
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -166,6 +170,9 @@ hl.animation({ leaf = "workspacesIn", enabled = true, speed = 0.96, bezier = "al
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.56, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 2.8, bezier = "quick" })
 
+-- Workspace -> monitor assignments from nwg-displays, if any
+pcall(require, "workspaces")
+
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 -- uncomment all if you wish to use that.
@@ -295,6 +302,7 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd([[notify-send "$(date '+%A, %B %d | %
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(uwsm_start .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
+hl.bind(mainMod .. " + ALT + space", hl.dsp.exec_cmd("qs ipc call settings toggle"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 -- Screenshots (grim + slurp, satty to annotate)
@@ -412,10 +420,10 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
--- Quickshell surfaces (OSD, notifications, launcher, power menu) pop without
+-- Quickshell surfaces (OSD, notifications, launcher, power/settings menus) pop without
 -- a compositor layer fade; each keeps its own QML opacity transition instead.
 hl.layer_rule({
-    match = { namespace = "^(qs-launcher|qs-powermenu|qs-osd|qs-notifications)$" },
+    match = { namespace = "^(qs-launcher|qs-powermenu|qs-settings|qs-osd|qs-notifications)$" },
     no_anim = true,
     animation = "none",
 })
@@ -443,4 +451,31 @@ hl.window_rule({
     float = true,
     center = true,
     size = { "(monitor_w*0.7)", "(monitor_h*0.7)" },
+})
+
+-- Settings menu tools (quickshell SettingsMenu.qml): floating, centered, 80% of the screen.
+-- nm-connection-editor and nwg-displays are narrowed down so their dialogs keep their own size.
+hl.window_rule({
+    name = "settings-tools",
+    match = { class = "^(tui\\..+)$" },
+
+    float = true,
+    center = true,
+    size = { "(monitor_w*0.8)", "(monitor_h*0.8)" },
+})
+hl.window_rule({
+    name = "settings-network",
+    match = { class = "^(nm-connection-editor)$", title = "^(Network Connections)$" },
+
+    float = true,
+    center = true,
+    size = { "(monitor_w*0.8)", "(monitor_h*0.8)" },
+})
+hl.window_rule({
+    name = "settings-displays",
+    match = { class = "^(nwg-displays)$", modal = false },
+
+    float = true,
+    center = true,
+    size = { "(monitor_w*0.8)", "(monitor_h*0.8)" },
 })

@@ -205,6 +205,7 @@
         "naviterm": "naviterm",
         "nixpkgs": "nixpkgs_2",
         "nvim-conf": "nvim-conf",
+        "wlctl": "wlctl",
         "zen-browser": "zen-browser"
       }
     },
@@ -235,6 +236,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "wlctl": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788059764,
+        "narHash": "sha256-ekrzW0MF8umqEopkcM1NCruC6X2G5nf3wQCVYzG+yAs=",
+        "owner": "aashish-thapa",
+        "repo": "wlctl",
+        "rev": "8a885dbbdf76e1b3ace99912f0f6f6ccfe53e0b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aashish-thapa",
+        "repo": "wlctl",
         "type": "github"
       }
     },

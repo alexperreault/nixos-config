@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   programs.hyprland = {
     enable = true;
@@ -28,6 +33,8 @@
           libnotify
           matugen
           nautilus
+          networkmanagerapplet
+          nwg-displays
           papirus-icon-theme
           playerctl
           wiremix
@@ -35,6 +42,7 @@
           satty
           slurp
           wl-clipboard
+          inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
 
         file.".config/matugen/config.toml".source = ../dotfiles/matugen/config.toml;

@@ -1,2 +1,8 @@
 .env
 .direnv/
+
+# nwg-displays output, per machine
+dotfiles/hypr/monitors.conf
+dotfiles/hypr/monitors.lua
+dotfiles/hypr/workspaces.conf
+dotfiles/hypr/workspaces.lua
