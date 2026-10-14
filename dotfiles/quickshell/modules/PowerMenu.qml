@@ -15,6 +15,7 @@ Item {
     property string query: ""
 
     readonly property var allEntries: [
+        { label: "Lock", icon: "󰌾", value: "lock" },
         { label: "Suspend", icon: "󰤄", value: "suspend" },
         { label: "Reboot", icon: "󰜉", value: "reboot" },
         { label: "Shutdown", icon: "󰐥", value: "shutdown" },
@@ -42,6 +43,7 @@ Item {
 
     function act(item) {
         switch (item.value) {
+        case "lock": Quickshell.execDetached(["loginctl", "lock-session"]); break
         case "suspend": Quickshell.execDetached(["systemctl", "suspend"]); break
         case "reboot": Quickshell.execDetached(["systemctl", "reboot"]); break
         case "shutdown": Quickshell.execDetached(["systemctl", "poweroff"]); break

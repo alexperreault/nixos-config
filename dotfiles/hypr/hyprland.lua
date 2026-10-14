@@ -289,6 +289,8 @@ hl.bind(
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
 hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("qs ipc call powermenu toggle"))
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd("qs ipc call powermenu toggle"))
+hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd([[notify-send "$(date '+%A, %B %d | %H:%M')"]]))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(uwsm_start .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))

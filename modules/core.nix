@@ -20,6 +20,11 @@
 
     printing.enable = true;
 
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
+      HandlePowerKeyLongPress = "ignore";
+    };
+
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
