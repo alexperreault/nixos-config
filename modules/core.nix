@@ -9,18 +9,6 @@
   time.timeZone = "America/Toronto";
 
   services = {
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      nssmdns6 = false;
-      openFirewall = true;
-      publish = {
-        enable = true;
-        addresses = true;
-        workstation = true;
-      };
-    };
-
     xserver = {
       enable = false;
       xkb = {

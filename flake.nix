@@ -55,6 +55,12 @@
             ./devices/north/configuration.nix
           ];
         };
+        rve = lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./devices/rve/configuration.nix
+          ];
+        };
       };
     };
 }

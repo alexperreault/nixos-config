@@ -8,7 +8,7 @@ nix-rebuild-test:
 
 # Rebuild from the GitHub remote, bypassing the flake cache
 nix-rebuild-remote:
-    sudo nixos-rebuild switch --refresh --flake github:alexperreault/nixos-config#north
+    sudo nixos-rebuild switch --refresh --flake github:alexperreault/nixos-config#$(hostname)
 
 # Kill and relaunch quickshell (escape hatch when hot-reload wedges)
 shell-restart:
