@@ -57,4 +57,7 @@ fi
 echo "wallpaper -> $wall"
 hyprctl hyprpaper wallpaper ", $wall"
 
+mkdir -p "$HOME/.local/state"
+ln -sf "$(readlink -f "$wall")" "$HOME/.local/state/wallpaper"
+
 exec "$HERE/theme.sh"

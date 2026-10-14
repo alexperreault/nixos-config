@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -49,6 +48,8 @@ _:
         "org/gnome/shell/keybindings" = lib.listToAttrs (
           map (i: lib.nameValuePair "switch-to-application-${toString i}" [ ]) (lib.range 1 9)
         );
+
+        "org/gnome/settings-daemon/plugins/power".power-button-action = "interactive";
 
         "org/gnome/settings-daemon/plugins/media-keys" = {
           # Lock moves off Super+L (Forge focus-right)
