@@ -10,5 +10,6 @@ if [[ $(hyprctl hyprsunset identity get) == "true" ]]; then
     notify-send "Night light" "On"
 else
     hyprctl hyprsunset identity true >/dev/null
+    hyprctl hyprsunset gamma 100 >/dev/null
     notify-send "Night light" "Off"
 fi
