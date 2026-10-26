@@ -10,10 +10,10 @@ nix-rebuild-test:
 nix-rebuild-remote:
     sudo nixos-rebuild switch --refresh --flake github:alexperreault/nixos-config#$(hostname)
 
-# Kill and relaunch quickshell (escape hatch when hot-reload wedges)
+# Kill and relaunch noctalia
 shell-restart:
-    pkill -u "$(whoami)" -x quickshell || true
-    uwsm app -- quickshell &
+    pkill -u "$(whoami)" -x noctalia || true
+    uwsm app -- noctalia &
 
 # Format the flake with nixfmt
 fmt:
@@ -22,11 +22,3 @@ fmt:
 # Lint with statix
 lint:
     statix check .
-
-# Pick a random wallpaper from ~/Pictures/wallpaper and retheme from it
-wallpaper *ARGS:
-    dotfiles/hypr/scripts/wallpaper.sh {{ARGS}}
-
-# Regenerate the matugen palette from the wallpaper currently displayed
-theme:
-    dotfiles/hypr/scripts/theme.sh

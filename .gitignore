@@ -6,3 +6,6 @@ dotfiles/hypr/monitors.conf
 dotfiles/hypr/monitors.lua
 dotfiles/hypr/workspaces.conf
 dotfiles/hypr/workspaces.lua
+
+# Noctalia palette, generated from the wallpaper
+dotfiles/hypr/noctalia.lua

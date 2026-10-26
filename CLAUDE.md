@@ -10,8 +10,7 @@ just nix-rebuild-test   # sudo nixos-rebuild test --flake .
 just update-flake       # nix flake update
 just commit             # git add . + commit with generation numbers + push
 just update             # update-flake → nix-rebuild → wait-net → commit
-just wallpaper [path]   # random (or given) wallpaper + retheme
-just theme              # retheme from the current wallpaper
+just shell-restart      # kill and relaunch noctalia
 ```
 
 Keep `just wait-net` between rebuild and commit in any chained recipe (the rebuild restarts NetworkManager).
@@ -29,15 +28,15 @@ Keep `just wait-net` between rebuild and commit in any chained recipe (the rebui
 
 ## Dotfiles
 
-- `home.file.*.source` (foot, naviterm, matugen): copied into the store; needs a rebuild to take effect.
-- `hypr` and `quickshell` are `mkOutOfStoreSymlink`s into this repo: edits are live. Hyprland does not hot-reload through the symlink, so run `hyprctl reload` after editing.
+- `home.file.*.source` (foot, naviterm): copied into the store; needs a rebuild to take effect.
+- `hypr` is an `mkOutOfStoreSymlink` into this repo: edits are live. Hyprland does not hot-reload through the symlink, so run `hyprctl reload` after editing.
 - `dotfiles/hypr/hyprland.lua` uses the Hyprland Lua API (`hl.*`), not `hyprland.conf` syntax. Keep new settings in the matching commented section.
 - Launch apps via `uwsm app --` in autostart/keybinds.
 - Hyprland wiki is cloned at `~/hyprland-wiki`; grep `content/` instead of fetching. `git -C ~/hyprland-wiki pull` if an option seems missing.
 
-## Theming (matugen)
+## Shell (noctalia)
 
-- matugen themes Hyprland borders/shadow only. The palette is runtime state in `~/.local/state/matugen/colors.lua`; never commit generated colors.
-- `hyprland.lua` must load it by absolute path inside `pcall` (a failed `require` kills the file), with hardcoded fallback colors.
-- `source_color_index` stays pinned in `dotfiles/matugen/config.toml` (otherwise matugen prompts and breaks unattended runs).
-- `wallpaper.sh` sniffs magic bytes (no `file` available; some wallpapers have no extension). `hyprpaper.conf` is only a boot fallback; hyprpaper IPC supports just `wallpaper` and `listactive`.
+- Noctalia (bar, launcher, session menu, OSD, notifications, lock, night light, idle, wallpaper, polkit, screenshots) is started from `hyprland.lua` autostart, not systemd (GNOME on rve would start it too). Control it with `noctalia msg <command>` (`noctalia msg --help`).
+- Defaults live in `programs.noctalia.settings` (`modules/hyprland.nix`, validated at build time). Changes made in its settings UI go to `~/.local/state/noctalia/settings.toml` and override Nix; delete that file to fall back to Nix.
+- Noctalia's hyprland template writes border colors to `dotfiles/hypr/noctalia.lua` (gitignored, never commit). `hyprland.lua` loads it inside `pcall` with hardcoded fallbacks, and must keep the literal text `require("noctalia")` or noctalia appends an unguarded require to it.
+- Monitor layout stays with nwg-displays (noctalia has no output configuration UI).
