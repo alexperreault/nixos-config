@@ -14,7 +14,6 @@ in
     homeDirectory = "/home/alexp";
 
     packages = with pkgs; [
-      brave-origin
       htop
       inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.naviterm.packages.${pkgs.stdenv.hostPlatform.system}.default
