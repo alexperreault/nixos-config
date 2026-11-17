@@ -12,6 +12,7 @@
     ../../modules/hyprland.nix
     ../../modules/gnome.nix
     ../../modules/casting.nix
+    ../../modules/zed.nix
     ../../modules/home-manager.nix
   ];
 
